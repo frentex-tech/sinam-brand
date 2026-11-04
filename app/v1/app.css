@@ -5,7 +5,7 @@
   --ink:#1F1A16; --ink2:#4A4038; --muted:#8A7C6E;
   --brand:#2E3A2C; --brand2:#3E4D3B; --ember:#B8492B; --ember2:#9E3C22; --gold:#B48A52; --ok:#3F7A4E;
   --r-lg:26px; --r:18px; --r-sm:12px;
-  --f:'Readex Pro',system-ui,sans-serif; --fd:'Aref Ruqaa',serif;
+  --f:'Readex Pro',system-ui,sans-serif; --fd:'Aref Ruqaa',serif; --fw:'El Messiri',serif;
   --shadow:0 1px 2px rgba(31,26,22,.06),0 8px 24px -12px rgba(31,26,22,.18);
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -23,7 +23,7 @@ svg{flex:none}
 .side.notes{border-inline-end:0;border-inline-start:1px solid #D9CFBF}
 .brandline{display:flex;align-items:center;gap:10px;margin-bottom:22px}
 .brandline svg{width:34px;height:34px}
-.brandline b{font-family:var(--fd);font-size:26px;line-height:1}
+.brandline b{font-family:var(--fw);font-size:26px;line-height:1}
 .brandline small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
 .idx h4{font-size:12px;color:var(--muted);font-weight:500;margin:20px 0 6px}
 .idx button{display:flex;justify-content:space-between;width:100%;text-align:start;padding:7px 10px;border-radius:9px;font-size:14px;color:var(--ink2)}
@@ -414,9 +414,10 @@ svg{flex:none}
 
 /* logo lockup + revisions */
 .lockup{display:inline-flex;align-items:center;gap:6px}
-.lockup b{font-family:var(--fd);font-weight:700;line-height:1;display:block}
+.lockup b{font-family:var(--fw);font-weight:700;line-height:1;display:block}
+.wordmark{font-family:var(--fw);font-weight:700;line-height:1.1}
 .lockup small{display:block;font-size:11px;opacity:.7}
-.seal{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;background:#2E3A2C;box-shadow:0 0 0 10px #16120F,0 0 0 11.5px rgba(233,184,122,.45),0 0 0 26px rgba(46,58,44,.18)}
+.seal{filter:drop-shadow(0 20px 40px rgba(217,168,102,.18))}
 .greet .lockup{color:var(--brand)}
 .locline{display:flex;align-items:center;gap:5px;margin:0 20px 10px;font-size:13px;color:var(--muted);cursor:pointer}
 .locline b{color:var(--ink);font-weight:600}

@@ -69,9 +69,14 @@
   const star = (s = 14) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="#E0A44A" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1L3.2 9.4l6.1-.8z"/></svg>`;
   const playI = (s = 24) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
   // brand mark: hump over a ring (Bedouin wasm)
-  const mark = (c = 'currentColor', s = 34, w = 9) => `<svg width="${s}" height="${s}" viewBox="0 0 100 100" aria-hidden="true"><path d="M12 66 C29 66 32 22 50 22 C68 22 71 66 88 66" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/><circle cx="50" cy="69" r="10" fill="none" stroke="${c}" stroke-width="${w * .75}"/></svg>`;
+  // brand emblem: Najdi arch · guiding star · hump on the horizon (viewBox 100×120)
+  const mark = (c = '#2E3A2C', s = 34) => {
+    const light = /^#[EF]/i.test(c), line = light ? '#2E3A2C' : '#F4EEE4', gold = light ? '#B8492B' : '#D9A866';
+    const f = c === 'currentColor' ? 'currentColor' : c;
+    return `<svg width="${s}" height="${s * 1.2}" viewBox="0 0 100 120" aria-hidden="true"><path d="M8 118V50a42 42 0 0 1 84 0v68z" fill="${f}"/>${s >= 40 ? `<path d="M15.5 111V50.5a34.5 34.5 0 0 1 69 0V111z" fill="none" stroke="${gold}" stroke-width="1.3"/>` : ''}<path d="M50 26.5l2.3 6.2 6.2 2.3-6.2 2.3L50 43.5l-2.3-6.2-6.2-2.3 6.2-2.3z" fill="${gold}"/><path d="M23 90c11 0 14-28 27-28s16 28 27 28" fill="none" stroke="${line}" stroke-width="${s >= 40 ? 6.5 : 8}" stroke-linecap="round"/><path d="M27 100.5h46" stroke="${gold}" stroke-width="${s >= 40 ? 2.4 : 3.5}" stroke-linecap="round"/></svg>`;
+  };
 
-  const logo = (c = '#F4EEE4', s = 30, sub = '') => `<span class="lockup" style="color:${c}">${mark(c, s)}<span><b style="font-size:${s * .95}px">سنام</b>${sub ? `<small>${sub}</small>` : ''}</span></span>`;
+  const logo = (c = '#F4EEE4', s = 30, sub = '') => `<span class="lockup" style="color:${c}">${mark(/^#[EF]/i.test(c) ? '#F4EEE4' : '#2E3A2C', s * .8)}<span><b style="font-size:${s * .95}px">سنام</b>${sub ? `<small>${sub}</small>` : ''}</span></span>`;
 
   /* ── chrome ── */
   const SB = (cls = '') => `<div class="sb ${cls}"><span>9:41</span><span class="ic"><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.5c2.3 0 4.4.9 6 2.4l1.3-1.4A10.5 10.5 0 0 0 8 .6 10.5 10.5 0 0 0 .7 3.5L2 4.9a8.6 8.6 0 0 1 6-2.4zm0 3.7c1.3 0 2.5.5 3.4 1.4l1.3-1.4A6.7 6.7 0 0 0 8 4.3 6.7 6.7 0 0 0 3.3 6.2l1.3 1.4c.9-.9 2.1-1.4 3.4-1.4zM8 9.8l1.9-2a2.7 2.7 0 0 0-3.8 0z"/></svg><svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="3.5" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2" fill="currentColor"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="currentColor" opacity=".5"/></svg></span></div>`;
@@ -130,8 +135,8 @@
   /* ── 1. البداية والحساب ── */
   const G1 = 'البداية والحساب';
   add(G1, 'splash', 'شاشة البداية', 'أول ما يفتح التطبيق: شعار سنام كامل على خلفية داكنة. اضغط على الشاشة للمتابعة.', () => scr(`${SB()}<div data-go="onb1" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#F4EEE4;cursor:pointer">
-    <div class="seal">${mark('#F4EEE4', 88, 8)}</div>
-    <div style="font-family:var(--fd);font-size:72px;font-weight:700;line-height:1.25;margin-top:26px">سنام</div>
+    <div class="seal">${mark('#2E3A2C', 112)}</div>
+    <div class="wordmark" style="font-size:76px;margin-top:22px">سنام</div>
     <div style="letter-spacing:9px;font-size:13px;color:#E9B87A;margin:2px 0 14px;direction:ltr">SINAM</div>
     <div style="color:#B7AA9B;font-size:15px">لحوم بلدية… تُذبح يوم طلبك</div></div>
     <div data-go="onb1" style="text-align:center;padding:0 0 46px;color:#7D7062;font-size:12px;cursor:pointer">ذبح حلال · إشراف بيطري · توصيل مبرّد</div>`, 'dark'));
@@ -144,7 +149,7 @@
   add(G1, 'onb3', 'تعريف ٣ — مزايا سنام', 'المزايا الإضافية في شاشة واحدة: النقاط وقصص الاستلام وسهم الخير.', () => onb(2, 'roast-shoulder', 'مزايا سنام', 'كل طلب يرجع لك بنقاط', 'نقطة مع كل ريال تستبدلها بخصومات، وشارك قصة استلامك، وساهم في سهم الخير من داخل التطبيق.', 'login', 'ابدأ التسوّق'));
 
   add(G1, 'login', 'تسجيل الدخول', 'الدخول برقم الجوال فقط، بدون كلمة مرور.', () => scr(`${SB()}<div class="body pad" style="padding-top:20px">
-    <div style="color:var(--brand)">${mark('currentColor', 48)}</div>
+    ${logo('var(--brand)', 46)}
     <div class="title" style="margin-top:20px">حيّاك في سنام</div><p class="sub">أدخل رقم جوالك ونرسل لك رمز التحقق</p>
     <span class="lbl">رقم الجوال</span>
     <div class="field on" style="direction:ltr"><span style="display:flex;align-items:center;gap:6px;padding-inline-end:12px;border-inline-end:1px solid var(--line);font-weight:500">🇸🇦 +966</span><span style="font-size:17px;letter-spacing:1px">5 0 1 2 3 4 5 6 7</span></div>
