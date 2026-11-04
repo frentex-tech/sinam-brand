@@ -423,3 +423,12 @@ svg{flex:none}
 .locline b{color:var(--ink);font-weight:600}
 .tabbar .mid i{position:relative}
 .mdot{position:absolute;top:-2px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;border:2px solid var(--paper);font-style:normal}
+
+/* gold ram logo */
+.splash-bg{background:radial-gradient(120% 70% at 50% 40%,#5A1418 0%,#3A0D10 55%,#240709 100%)!important}
+.gold{background:linear-gradient(100deg,#F7E6BC,#DDB46A 40%,#AE7C37 70%,#EBCB8C);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tline{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:var(--fw);font-size:19px}
+.tline i{width:56px;height:1.5px;background:linear-gradient(90deg,transparent,#C99A52)}
+.tline i:last-child{transform:scaleX(-1)}
+.seal{filter:drop-shadow(0 18px 36px rgba(0,0,0,.45))}
+.lockup img{flex:none}
