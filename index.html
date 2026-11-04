@@ -67,6 +67,13 @@ a{color:inherit}
 .how li b{display:block;font-size:19px}
 .how li span{color:#4b463f}
 .cmp{display:inline-block;margin-top:30px;padding:12px 26px;border:1.5px solid #1d1b18;border-radius:4px;text-decoration:none;font-weight:700}
+.proto{display:grid;grid-template-columns:1fr 1.1fr;gap:50px;align-items:center;padding:90px 0;border-bottom:1px solid #e7e3dc}
+.proto h2{font-family:'Amiri',serif;font-size:clamp(32px,4vw,46px);line-height:1.3;margin:0}
+.proto p{color:#4b463f;max-width:46ch}
+.proto .go{display:inline-block;margin-top:10px;padding:13px 26px;border-radius:12px;background:#B8492B;color:#fff;text-decoration:none;font-weight:700}
+.proto .shot{display:block;border-radius:22px;overflow:hidden;aspect-ratio:3/2}
+.proto .shot img{width:100%;height:100%;object-fit:cover}
+@media (max-width:900px){.proto{grid-template-columns:1fr}}
 .feat{padding:100px 0;border-bottom:1px solid #e7e3dc}
 .feat h2{font-family:'Amiri',serif;font-size:clamp(32px,4vw,46px);line-height:1.3;margin:0}
 .feat .lead{color:#6b665e;margin:10px 0 40px}
@@ -101,6 +108,12 @@ footer{border-top:1px solid #e7e3dc;padding:28px;text-align:center;font-size:14p
     <div class="find"><h3>الفرصة</h3>
       <p>لا أحد يملك «الأصالة الحقيقية» بعيدًا عن الذهب والتاج، ولا «الوضوح العصري» المبني على الأرقام، ولا «الضمان» بوصفه علامة مرئية. كل اتجاه من الاتجاهات الثلاثة يأخذ واحدة من هذه المساحات.</p></div>
   </div>
+</section>
+
+<section class="proto wrap" aria-labelledby="p-h">
+  <div class="pt"><h2 id="p-h">نموذج التطبيق التفاعلي</h2><p>جرّب التطبيق كأنه على جوالك: ٥٨ شاشة من أول فتحة حتى استلام الطلب، مع سهم الخير وقصص الاستلام ونقاط سنام.</p>
+  <a class="go" href="app/v1/">افتح التصميم الأول</a></div>
+  <a class="shot" href="app/v1/" aria-label="افتح نموذج التطبيق"><img src="app/img/steaks-dark.jpg" alt=""></a>
 </section>
 
 <section class="feat wrap" aria-labelledby="f-h">
