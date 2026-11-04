@@ -466,17 +466,31 @@
   ];
   const sec = (i, inner, cls = '') => `<section id="${S[i][0]}" class="sec ${cls}"><header class="sec-h"><span class="sec-n">${String(i + 1).padStart(2, '0')}</span><h2>${S[i][1]}</h2></header>${inner}</section>`;
 
+  // real prototype screenshots (final identity only)
+  const shot = (b, n) => `<img class="shot-img" src="${b.shots}${n}.jpg" alt="">`;
+  function shotsSection(b) {
+    const fig = (n, t) => `<figure>${phone(shot(b, n))}<figcaption>${t}</figcaption></figure>`;
+    return `<div class="app-top"><div class="ai-wrap">${appIcon(b)}<span>أيقونة التطبيق</span></div>${phone(shot(b, 'splash'), 'small')}</div>
+      <h3 class="app-h">البداية</h3><p class="app-p">شاشة الشعار، ثم ثلاث شاشات تعريفية تبدأ بأساس سنام: لحم بلدي طازج يُذبح يوم الطلب.</p>
+      <div class="phones">${[['onb1', 'لحوم سنام'], ['onb2', 'التقطيع والتوصيل'], ['onb3', 'مزايا سنام'], ['login', 'تسجيل الدخول']].map(a => fig(...a)).join('')}</div>
+      <h3 class="app-h">التسوّق والطلب</h3>
+      <div class="phones">${[['home', 'الرئيسية'], ['product', 'صفحة الذبيحة'], ['cart', 'السلة'], ['track', 'تتبّع الطلب']].map(a => fig(...a)).join('')}</div>
+      <h3 class="app-h">المزايا</h3><p class="app-p">ميزات إضافية تبني الولاء: النقاط، وقصص الاستلام، وسهم الخير.</p>
+      <div class="phones">${[['points', 'نقاط سنام'], ['storyView', 'قصص الاستلام'], ['sahm', 'سهم الخير'], ['account', 'حسابي']].map(a => fig(...a)).join('')}</div>
+      <p style="text-align:center;margin-top:30px"><a class="tn-cmp" style="display:inline-block;padding:12px 26px;text-decoration:none" href="${b.appUrl}">شاهد كل الشاشات (٥٨) في النموذج التفاعلي</a></p>`;
+  }
+
   function renderBrand(b) {
     const c = b.c, st = b.strategy, so = social(b);
     const others = window.BRAND_ORDER.filter(k => k !== b.id).map(k => B[k]);
     return `${ROUGH}
     <a class="skip" href="#strategy">تخطَّ إلى المحتوى</a>
-    <nav class="topnav"><a href="../" class="tn-home">← كل الاتجاهات</a><div class="tn-links">${S.map(([id, t], i) => `<a href="#${id}">${t}</a>`).join('')}</div><a class="tn-cmp" href="../compare/">مقارنة</a></nav>
+    <nav class="topnav"><a href="../" class="tn-home">← ${b.final ? 'الرئيسية' : 'كل الاتجاهات'}</a><div class="tn-links">${S.map(([id, t], i) => `<a href="#${id}">${t}</a>`).join('')}</div>${b.final ? `<a class="tn-cmp" href="${b.appUrl}">نموذج التطبيق</a>` : '<a class="tn-cmp" href="../compare/">مقارنة</a>'}</nav>
 
     <header class="hero">
       <div class="hero-pat" style="background-image:${bg(b)}"></div>
       <div class="hero-in">
-        <div class="hero-tag">الاتجاه ${b.letter} · ${b.latin}</div>
+        <div class="hero-tag">${b.final ? b.heroTag : `الاتجاه ${b.letter} · ${b.latin}`}</div>
         <div class="hero-logo">${lockup(b, b.id === 'seen' ? c.ink : c.paper, c.a)}</div>
         <p class="hero-sum">${b.summary}</p>
       </div>
@@ -526,7 +540,7 @@
     ${sec(6, `<div class="ig"><div class="ig-head">${so.avatar}<div><b>sinam.sa</b><span>${b.tagline} · الرياض</span></div></div>
       <div class="ig-wrap"><div class="ig-grid">${so.posts.join('')}</div><div class="ig-story">${so.story}</div></div></div>`)}
 
-    ${sec(7, `<div class="app-top"><div class="ai-wrap">${appIcon(b)}<span>أيقونة التطبيق</span></div>${phone(splash(b), 'small')}</div>
+    ${b.shots ? sec(7, shotsSection(b)) : ''}${b.shots ? '' : sec(7, `<div class="app-top"><div class="ai-wrap">${appIcon(b)}<span>أيقونة التطبيق</span></div>${phone(splash(b), 'small')}</div>
       <h3 class="app-h">الشاشات التعريفية</h3><p class="app-p">أول ما يراه العميل بعد التحميل: ثلاث شاشات تعرّفه بما لا يجده في تطبيق آخر.</p>
       <div class="phones three">${[0, 1, 2].map(i => `<figure>${phone(screenOnboard(b, i))}<figcaption>${i + 1} — ${ONBOARD[i][0]}</figcaption></figure>`).join('')}</div>
       <h3 class="app-h">مزايا سنام داخل التطبيق</h3><p class="app-p">«سهم الخير» في منتصف الشريط السفلي، وقصص الاستلام أعلى الرئيسية، ورصيد النقاط ظاهر دائمًا في الترويسة.</p>
@@ -536,17 +550,17 @@
 
     ${sec(8, `<div class="scene" style="background-image:${bg(b)}">
         <div class="sc-box">${box(b, 380)}</div>
-        <div class="sc-phone">${phone(screenHome(b))}</div>
+        <div class="sc-phone">${b.shots ? phone(shot(b, 'home')) : phone(screenHome(b))}</div>
         <div class="sc-bag">${bag(b, 190)}</div>
         <div class="sc-card"><div class="cards">${card(b)}</div></div>
       </div>`, 'last')}
 
-    <section class="choose">
+    ${b.final ? `<section class="choose"><h2>جرّب التطبيق بنفسك</h2><p>٥٨ شاشة تفاعلية بهذه الهوية، من أول فتحة حتى استلام الطلب.</p><div class="ch-links"><a href="${b.appUrl}" style="--oc:${c.p}">افتح نموذج التطبيق</a><a href="../" class="cmp">الصفحة الرئيسية</a></div></section></main>` : `<section class="choose">
       <h2>هل هذا اتجاهك؟</h2>
       <p>شاهد الاتجاهين الآخرين قبل أن تقرر، أو قارن الثلاثة جنبًا إلى جنب.</p>
       <div class="ch-links">${others.map(o => `<a href="../${o.id}/" style="--oc:${o.c.p}">الاتجاه ${o.letter} · ${o.name}</a>`).join('')}<a href="../compare/" class="cmp">المقارنة</a></div>
     </section>
-    </main>`;
+    </main>`}`;
   }
 
   /* ── colour utils ── */
