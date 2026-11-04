@@ -71,13 +71,15 @@
   // brand mark: hump over a ring (Bedouin wasm)
   const mark = (c = 'currentColor', s = 34, w = 9) => `<svg width="${s}" height="${s}" viewBox="0 0 100 100" aria-hidden="true"><path d="M12 66 C29 66 32 22 50 22 C68 22 71 66 88 66" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/><circle cx="50" cy="69" r="10" fill="none" stroke="${c}" stroke-width="${w * .75}"/></svg>`;
 
+  const logo = (c = '#F4EEE4', s = 30, sub = '') => `<span class="lockup" style="color:${c}">${mark(c, s)}<span><b style="font-size:${s * .95}px">سنام</b>${sub ? `<small>${sub}</small>` : ''}</span></span>`;
+
   /* ── chrome ── */
   const SB = (cls = '') => `<div class="sb ${cls}"><span>9:41</span><span class="ic"><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.5c2.3 0 4.4.9 6 2.4l1.3-1.4A10.5 10.5 0 0 0 8 .6 10.5 10.5 0 0 0 .7 3.5L2 4.9a8.6 8.6 0 0 1 6-2.4zm0 3.7c1.3 0 2.5.5 3.4 1.4l1.3-1.4A6.7 6.7 0 0 0 8 4.3 6.7 6.7 0 0 0 3.3 6.2l1.3 1.4c.9-.9 2.1-1.4 3.4-1.4zM8 9.8l1.9-2a2.7 2.7 0 0 0-3.8 0z"/></svg><svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="3.5" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2" fill="currentColor"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="currentColor" opacity=".5"/></svg></span></div>`;
   const hdr = (title = '', { back = true, act = '' } = {}) => `<div class="hdr">${back ? `<button class="ib" data-back aria-label="رجوع">${ic('back', 20)}</button>` : '<span class="ib ph"></span>'}<h1>${title}</h1>${act || '<span class="ib ph"></span>'}</div>`;
   const tabbar = (on) => {
-    const t = [['home', 'home', 'الرئيسية'], ['cats', 'grid', 'الأقسام'], ['sahm', 'heart', 'سهم الخير'], ['orders', 'bag', 'طلباتي'], ['account', 'user', 'حسابي']];
+    const t = [['home', 'home', 'الرئيسية'], ['cats', 'grid', 'الأقسام'], ['cart', 'bag', 'السلة'], ['orders', 'receipt', 'طلباتي'], ['account', 'user', 'حسابي']];
     return `<nav class="tabbar">${t.map(([g, i, l], k) => k === 2
-      ? `<button class="mid ${on === g ? 'on' : ''}" data-go="${g}"><i>${ic(i, 24, 2)}</i>${l}</button>`
+      ? `<button class="mid ${on === g ? 'on' : ''}" data-go="${g}"><i>${ic(i, 24, 2)}<span class="mdot">2</span></i>${l}</button>`
       : `<button class="${on === g ? 'on' : ''}" data-go="${g}">${ic(i, 23)}${l}</button>`).join('')}</nav>`;
   };
   const price = (v, s = '') => `<span class="price">${s ? `<s>${s}</s>` : ''}${v}<small>ر.س</small></span>`;
@@ -127,18 +129,19 @@
 
   /* ── 1. البداية والحساب ── */
   const G1 = 'البداية والحساب';
-  add(G1, 'splash', 'شاشة البداية', 'أول ما يفتح التطبيق: الوسم والاسم على خلفية داكنة، وتنتقل تلقائيًا للشاشات التعريفية.', () => scr(`${SB()}<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#F4EEE4">
-    <div style="width:118px;height:118px;border-radius:34px;background:#2E3A2C;display:grid;place-items:center;box-shadow:0 0 0 14px rgba(46,58,44,.25)">${mark('#F4EEE4', 74)}</div>
-    <div style="font-family:var(--fd);font-size:58px;font-weight:700;line-height:1.3;margin-top:22px">سنام</div>
-    <div style="color:#B7AA9B;font-size:14px">لحوم بلدية موسومة</div></div>
-    <div style="text-align:center;padding:0 0 46px;color:#7D7062;font-size:12px">ذبح حلال · إشراف بيطري · توصيل مبرّد</div>`, 'dark'));
+  add(G1, 'splash', 'شاشة البداية', 'أول ما يفتح التطبيق: شعار سنام كامل على خلفية داكنة. اضغط على الشاشة للمتابعة.', () => scr(`${SB()}<div data-go="onb1" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#F4EEE4;cursor:pointer">
+    <div class="seal">${mark('#F4EEE4', 88, 8)}</div>
+    <div style="font-family:var(--fd);font-size:72px;font-weight:700;line-height:1.25;margin-top:26px">سنام</div>
+    <div style="letter-spacing:9px;font-size:13px;color:#E9B87A;margin:2px 0 14px;direction:ltr">SINAM</div>
+    <div style="color:#B7AA9B;font-size:15px">لحوم بلدية… تُذبح يوم طلبك</div></div>
+    <div data-go="onb1" style="text-align:center;padding:0 0 46px;color:#7D7062;font-size:12px;cursor:pointer">ذبح حلال · إشراف بيطري · توصيل مبرّد</div>`, 'dark'));
 
-  const onb = (n, img, k, t, d, next, label = 'التالي') => scr(`<div class="onb-img" style="${bgi(img)}">${SB('float')}<button style="position:absolute;top:62px;inset-inline-end:22px;color:#fff;font-size:14px;z-index:3" data-go="login">تخطَّ</button></div>
+  const onb = (n, img, k, t, d, next, label = 'التالي') => scr(`<div class="onb-img" style="${bgi(img)}">${SB('float')}<div style="position:absolute;top:58px;inset-inline-start:22px;z-index:3">${logo('#F4EEE4', 26)}</div><button style="position:absolute;top:64px;inset-inline-end:22px;color:#fff;font-size:14px;z-index:3" data-go="login">تخطَّ</button></div>
     <div class="onb-copy"><span class="k">${k}</span><h2>${t}</h2><p>${d}</p></div>
     <div class="onb-foot"><div class="dots">${[0, 1, 2].map(i => `<i class="${i === n ? 'on' : ''}"></i>`).join('')}</div><button class="btn" data-go="${next}">${label} ${ic('fwd', 20)}</button></div>`, 'dark');
-  add(G1, 'onb1', 'تعريف ١ — سهم الخير', 'الشاشة الأولى تعرّف بأهم ما يميّز سنام: المساهمة في ذبيحة صدقة.', () => onb(0, 'camel-saddle', 'سهم الخير', 'اذبح لوجه الله… ونحن نتكفّل بالباقي', 'ساهم بسهم في ذبيحة صدقة، ونتولّى الذبح والتوزيع عبر جمعية مرخّصة، ويصلك التوثيق بالصور.', 'onb2'));
-  add(G1, 'onb2', 'تعريف ٢ — قصص الاستلام', 'العميل يصوّر طلبه وقت الاستلام وينشره داخل التطبيق.', () => onb(1, 'steaks-dark', 'قصص الاستلام', 'صوّر طلبك… وشاركه', 'انشر لحظة وصول طلبك في قصص سنام أو على سناب، واكسب ٥٠ نقطة مع كل قصة.', 'onb3'));
-  add(G1, 'onb3', 'تعريف ٣ — نقاط سنام', 'برنامج الولاء: نقطة مع كل ريال.', () => onb(2, 'roast-shoulder', 'نقاط سنام', 'كل طلب يقرّبك من ذبيحتك الجاية', 'نقطة مع كل ريال، تستبدلها بخصومات وتقطيع مجاني وذبيحة على حسابنا.', 'login', 'ابدأ'));
+  add(G1, 'onb1', 'تعريف ١ — لحوم سنام', 'أول رسالة للعميل: لحم بلدي طازج يُذبح يوم الطلب. هذا أساس التطبيق.', () => onb(0, 'steaks-dark', 'لحوم سنام', 'لحم بلدي طازج… يُذبح يوم طلبك', 'نعيمي وحري ونجدي وحاشي وعجل من مزارع موثوقة، بإشراف بيطري قبل الذبح وبعده.', 'onb2'));
+  add(G1, 'onb2', 'تعريف ٢ — التقطيع والتوصيل', 'العميل يختار التقطيع والتغليف، ويوصله الطلب مبرّدًا.', () => onb(1, 'lamb-raw', 'تقطيع وتوصيل', 'قطّعها مثل ما تبي… وتوصلك مبرّدة', 'ثلاجة أو مفطّح أو شوي، بتغليف سحب الهواء، وتوصيل مبرّد من ٠ إلى ٤°م لين باب بيتك.', 'onb3'));
+  add(G1, 'onb3', 'تعريف ٣ — مزايا سنام', 'المزايا الإضافية في شاشة واحدة: النقاط وقصص الاستلام وسهم الخير.', () => onb(2, 'roast-shoulder', 'مزايا سنام', 'كل طلب يرجع لك بنقاط', 'نقطة مع كل ريال تستبدلها بخصومات، وشارك قصة استلامك، وساهم في سهم الخير من داخل التطبيق.', 'login', 'ابدأ التسوّق'));
 
   add(G1, 'login', 'تسجيل الدخول', 'الدخول برقم الجوال فقط، بدون كلمة مرور.', () => scr(`${SB()}<div class="body pad" style="padding-top:20px">
     <div style="color:var(--brand)">${mark('currentColor', 48)}</div>
@@ -177,8 +180,9 @@
 
   /* ── 2. التسوّق ── */
   const G2 = 'التسوّق';
-  add(G2, 'home', 'الرئيسية', 'كل مزايا سنام في شاشة واحدة: ذبيحة اليوم، والقصص، والأقسام، وسهم الخير، والنقاط في الأعلى.', () => scr(`${SB()}<div class="body">
-    <div class="greet"><div class="loc"><small>التوصيل إلى</small><b data-go="addresses">الملقا، الرياض ${ic('down', 16)}</b></div><div class="acts"><button class="ib" data-go="points" style="width:auto;padding:0 12px;border-radius:21px;gap:5px;display:flex;font-size:13px;font-weight:600;color:var(--ember2)">${star(15)} 2,450</button><button class="ib" data-go="notifications">${ic('bell', 20)}<span class="dot">3</span></button><button class="ib" data-go="cart">${ic('bag', 20)}<span class="dot">2</span></button></div></div>
+  add(G2, 'home', 'الرئيسية', 'الواجهة الأساسية للبيع: ذبيحة اليوم والأقسام والأكثر طلبًا أولًا، ثم المزايا الإضافية (القصص والنقاط وسهم الخير).', () => scr(`${SB()}<div class="body">
+    <div class="greet">${logo('var(--brand)', 30)}<div class="acts"><button class="ib" data-go="points" style="width:auto;padding:0 12px;border-radius:21px;gap:5px;display:flex;font-size:13px;font-weight:600;color:var(--ember2)">${star(15)} 2,450</button><button class="ib" data-go="notifications">${ic('bell', 20)}<span class="dot">3</span></button></div></div>
+    <div class="locline" data-go="addresses">${ic('pin', 16)} التوصيل إلى <b>الملقا، الرياض</b> ${ic('down', 14)}<span class="tag green" style="margin-inline-start:auto">${ic('truck', 12)} يصل اليوم</span></div>
     <div class="search" data-go="search">${ic('search', 19)} نعيمي، ريب آي، حاشي…<span class="flt">${ic('filter', 16)}</span></div>
     <div class="hero" style="${bgi('steaks-dark')}"><div><span class="k">${ic('clock', 14)} اطلب قبل ٤ العصر</span><h2>ذبيحة اليوم</h2><p>نعيمي بلدي تُذبح الفجر، وتوصلك مبرّدة قبل المغرب</p><button class="go" data-go="product">اطلب الآن ${ic('fwd', 16)}</button></div></div>
     <div class="dots"><i class="on"></i><i></i><i></i></div>
@@ -186,9 +190,11 @@
     <div class="hscroll rings"><div class="ring" data-go="storyCam"><i class="add">${ic('plus', 24, 2)}</i>قصتك</div>${[['أم فهد', 'roast-shoulder'], ['سعد', 'steaks-garlic'], ['نورة', 'mandi'], ['خالد', 'bbq'], ['ريم', 'chops-wood']].map(([n, i], k) => `<div class="ring" data-go="storyView"><i class="${k > 2 ? 'seen' : ''}"><span style="${bgi(i)}"></span></i>${n}</div>`).join('')}</div>
     <div class="sec"><h3>الأقسام</h3><a data-go="cats">الكل</a></div>
     <div class="cats">${[['ذبائح كاملة', 'sheep', 'listing'], ['أنصاف وأرباع', 'carcass', 'listing'], ['بالكيلو', 'steaks-white', 'kilo'], ['حاشي', 'camel', 'listing'], ['معتّق', 'dryage', 'kilo'], ['الشوي', 'bbq', 'boxes'], ['بوكسات', 'mandi', 'boxes'], ['العروض', 'roast-paper', 'offers']].map(([n, i, g]) => `<div class="cat" data-go="${g}"><i style="${bgi(i)}"></i>${n}</div>`).join('')}</div>
-    <div class="sahm" data-go="sahm"><div class="si" style="${bgi('camel-saddle')}"></div><div class="sc"><small>سهم الخير</small><b>حاشي صدقة اليوم</b><div class="seg7">${[1, 1, 1, 1, 1, 0, 0].map(o => `<i class="${o ? 'on' : ''}"></i>`).join('')}</div><small>٥ من ٧ أسهم · يُذبح عند اكتمالها</small><span style="margin-top:auto;font-weight:600;font-size:13px;display:flex;align-items:center;gap:6px;padding-top:10px">ساهم بسهم · 520 ر.س ${ic('fwd', 16)}</span></div></div>
     <div class="sec"><h3>الأكثر طلبًا</h3><a data-go="listing">الكل</a></div>
     <div class="hscroll">${WHOLE.map(x => card(x)).join('')}</div>
+    <div class="sec"><h3>بالكيلو</h3><a data-go="kilo">الكل</a></div>
+    <div class="hscroll">${KILO.slice(0, 4).map(x => card(x, 'kilo')).join('')}</div>
+    <div class="sahm" data-go="sahm"><div class="si" style="${bgi('camel-saddle')}"></div><div class="sc"><small>سهم الخير</small><b>حاشي صدقة اليوم</b><div class="seg7">${[1, 1, 1, 1, 1, 0, 0].map(o => `<i class="${o ? 'on' : ''}"></i>`).join('')}</div><small>٥ من ٧ أسهم · يُذبح عند اكتمالها</small><span style="margin-top:auto;font-weight:600;font-size:13px;display:flex;align-items:center;gap:6px;padding-top:10px">ساهم بسهم · 520 ر.س ${ic('fwd', 16)}</span></div></div>
     <div class="trust">${[['shield', 'إشراف بيطري قبل وبعد الذبح'], ['snow', 'توصيل مبرّد من ٠ إلى ٤°م'], ['scale', 'الوزن الصافي مكتوب على كل كيس']].map(([i, t]) => `<div>${ic(i, 24, 1.6)}${t}</div>`).join('')}</div>
     </div></div>${tabbar('home')}`));
 
@@ -258,13 +264,13 @@
   /* ── 3. السلة والدفع ── */
   const G3 = 'السلة والدفع';
   const sum = (lines) => `<div class="summary">${lines.map(([a, b, c]) => `<div class="ln ${c || ''}"><span>${a}</span><span>${b}</span></div>`).join('')}</div>`;
-  add(G3, 'cart', 'السلة', 'مراجعة المنتجات والكميات، مع شريط يحسب النقاط المكتسبة.', () => scr(`${SB()}${hdr('السلة', { act: `<button class="ib">${ic('close', 18)}</button>` })}<div class="body pad">
+  add(G3, 'cart', 'السلة', 'مراجعة المنتجات والكميات، مع شريط يحسب النقاط المكتسبة.', () => scr(`${SB()}${hdr('السلة', { back: false })}<div class="body pad">
     <div class="banner cold">${ic('snow', 18)}<span>طلبك يُحفظ مبرّدًا من لحظة الذبح حتى التسليم</span></div>
     ${[['نعيمي بلدي — وسط', 'ثلاجة · سحب هواء · مع الرأس', '1,475', 'sheep'], ['ريب آي عجل', '١ كجم · سماكة وسط', '129', 'ribeye-paper'], ['بوكس المندي', 'يكفي ٨', '245', 'mandi']].map(([n, s, p, i]) => `<div class="cart-item"><div class="ii" style="${bgi(i)}"></div><div class="it"><b>${n}</b><small>${s}</small><span class="link" style="font-size:12px;margin-top:2px">تعديل</span><div class="pr">${price(p)}${stepper(1, 'sm')}</div></div></div>`).join('')}
     <div class="card" style="padding:12px 14px;margin:16px 0;display:flex;gap:10px;align-items:center" data-go="coupon">${ic('tag', 20)}<span style="flex:1">عندك كوبون خصم؟</span><span class="link">إضافة</span></div>
     ${sum([['المجموع', '1,849 ر.س'], ['التوصيل المبرّد', '<b style="color:var(--ok)">مجاني</b>'], ['الإجمالي شامل الضريبة', '1,849 ر.س', 'tot']])}
     <div class="banner info" style="margin:14px 0 18px">${star(16)}<span>تكسب <b>1,849 نقطة</b> من هذا الطلب</span></div></div>
-    <div class="foot"><button class="btn split" data-go="checkout"><span>متابعة الطلب</span><span style="direction:ltr">1,849 ر.س</span></button></div>`));
+    <div class="foot" style="padding-bottom:12px"><button class="btn split" data-go="checkout"><span>متابعة الطلب</span><span style="direction:ltr">1,849 ر.س</span></button></div>${tabbar('cart')}`));
 
   add(G3, 'checkout', 'إتمام الطلب', 'العنوان والموعد والدفع في شاشة واحدة، وكل جزء يفتح شاشته.', () => scr(`${SB()}${hdr('إتمام الطلب')}<div class="body pad">
     <span class="lbl" style="margin-top:4px">التوصيل إلى</span><div class="card list" data-go="addresses">${row(ic('home', 20), 'البيت', 'الملقا · شارع الأمير محمد بن سلمان')}</div>
@@ -342,7 +348,7 @@
   /* ── 5. سهم الخير ── */
   const G5 = 'سهم الخير';
   const seg7 = (n, c = '#E9B87A') => `<div style="display:flex;gap:5px">${Array.from({ length: 7 }, (_, i) => `<i style="flex:1;height:8px;border-radius:4px;background:${i < n ? c : 'rgba(244,238,228,.2)'}"></i>`).join('')}</div>`;
-  add(G5, 'sahm', 'سهم الخير', 'الصفحة الرئيسية للصدقة: الذبيحة المفتوحة للمساهمة، وأثر المساهمات.', () => scr(`<div class="body"><div style="height:330px;${bgi('camel-saddle')};background-size:cover;background-position:center 30%;position:relative;color:#fff">${SB('float')}<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,18,15,.25),rgba(22,18,15,.1) 40%,rgba(22,18,15,.92))"></div>
+  add(G5, 'sahm', 'سهم الخير', 'الصفحة الرئيسية للصدقة: الذبيحة المفتوحة للمساهمة، وأثر المساهمات.', () => scr(`<div class="body"><div style="height:330px;${bgi('camel-saddle')};background-size:cover;background-position:center 30%;position:relative;color:#fff">${SB('float')}<button class="ib glass" data-back style="position:absolute;top:58px;inset-inline-start:16px;z-index:3">${ic('back', 20)}</button><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,18,15,.25),rgba(22,18,15,.1) 40%,rgba(22,18,15,.92))"></div>
     <div style="position:absolute;bottom:24px;right:22px;left:22px"><span class="tag dark">${ic('heart', 12)} صدقة جارية</span><div style="font-family:var(--fd);font-size:40px;font-weight:700;line-height:1.3;margin-top:6px">سهم الخير</div><p style="margin:0;opacity:.85;font-size:14px">اذبح لوجه الله، ونحن نتكفّل بالذبح والتقطيع والتوزيع</p></div></div>
     <div class="pad"><div class="card" style="padding:16px;margin-top:-6px;position:relative;background:var(--brand);color:#F4EEE4;border:0">
     <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:16px">حاشي صدقة · الدفعة ١٢٤</b><small style="opacity:.8">يُذبح الخميس</small></div>
@@ -350,7 +356,7 @@
     <button class="btn light" style="margin-top:14px;height:48px" data-go="sahmPick">ساهم بسهم · 520 ر.س</button></div>
     <div class="sec"><h3>أثركم هذا الشهر</h3></div><div class="stats" style="padding:0">${[['86', 'ذبيحة'], ['1,240', 'أسرة'], ['9,300', 'وجبة']].map(([a, b]) => `<div><b>${a}</b><small>${b}</small></div>`).join('')}</div>
     <div class="sec"><h3>كيف يعمل؟</h3></div><div class="steps">${[['اختر سهمك', 'سُبع حاشي أو ذبيحة كاملة'], ['حدّد النيّة', 'عن نفسك أو عن والديك أو عن متوفّى'], ['نذبح ونوزّع', 'عبر جمعية البر الخيرية المرخّصة'], ['يصلك التوثيق', 'فيديو الذبح وإشعار التوزيع']].map(([t, s], i) => `<div class="step done"><i style="font-size:12px;font-weight:700">${i + 1}</i><div><b>${t}</b><small>${s}</small></div></div>`).join('')}</div>
-    <div class="card list" style="margin:20px 0">${row(ic('receipt', 20), 'صدقاتي', '٣ مساهمات · آخرها قبل أسبوعين', 'sahmProof')}</div></div></div>${tabbar('sahm')}`));
+    <div class="card list" style="margin:20px 0">${row(ic('receipt', 20), 'صدقاتي', '٣ مساهمات · آخرها قبل أسبوعين', 'sahmProof')}</div></div></div>${tabbar('')}`));
 
   add(G5, 'sahmPick', 'اختيار السهم', 'نوع المساهمة وعدد الأسهم.', () => scr(`${SB()}${hdr('اختر مساهمتك')}<div class="body pad">
     ${[['سهم في حاشي', 'سُبع ذبيحة حاشي · يُذبح عند اكتمال ٧ أسهم', '520', 'camel', 1], ['سهم في عجل', 'سُبع عجل بلدي', '480', 'cuts', 0], ['ذبيحة كاملة', 'نعيمي بلدي · لك وحدك', '1,450', 'sheep', 0], ['وجبات إفطار صائم', '٢٠ وجبة مطبوخة', '300', 'mandi', 0]].map(([t, s, p, i, o]) => `<div class="paym ${o ? 'on' : ''}" data-pick style="padding:10px"><span style="width:64px;height:64px;border-radius:14px;${bgi(i)};background-size:cover;background-position:center;flex:none"></span><div class="pt"><b>${t}</b><small>${s}</small><div style="margin-top:2px">${price(p)}</div></div><span class="radio ${o ? 'on' : ''}"></span></div>`).join('')}
@@ -426,7 +432,7 @@
   add(G8, 'account', 'حسابي', 'كل إعدادات العميل في قائمة واحدة واضحة.', () => scr(`${SB()}${hdr('حسابي', { back: false })}<div class="body">
     <div class="profile-top"><div class="av">ع</div><div style="flex:1"><b>عبدالله الشمّري</b><small style="direction:ltr;unicode-bidi:isolate">+966 50 123 4567</small></div><button class="ib" data-go="editProfile">${ic('edit', 19)}</button></div>
     <div class="stats">${[['2,450', 'نقطة'], ['14', 'طلب'], ['3', 'صدقة']].map(([a, b]) => `<div><b>${a}</b><small>${b}</small></div>`).join('')}</div>
-    <div class="pad"><div class="card list" style="margin-top:16px">${[['pin', 'عناويني', 'addresses'], ['card', 'طرق الدفع', 'payment'], ['heart', 'المفضلة', 'favorites'], ['star', 'نقاط سنام', 'points'], ['users', 'ادعُ صديقًا · 200 نقطة', 'invite']].map(([i, t, g]) => row(i === 'star' ? star(20) : ic(i, 20), t, '', g)).join('')}</div>
+    <div class="pad"><div class="card list" style="margin-top:16px">${[['pin', 'عناويني', 'addresses'], ['card', 'طرق الدفع', 'payment'], ['heart', 'المفضلة', 'favorites'], ['star', 'نقاط سنام', 'points'], ['heart', 'سهم الخير', 'sahm'], ['users', 'ادعُ صديقًا · 200 نقطة', 'invite']].map(([i, t, g]) => row(i === 'star' ? star(20) : ic(i, 20), t, '', g)).join('')}</div>
     <div class="card list" style="margin-top:12px">${[['bell', 'الإشعارات', 'notifications'], ['chat', 'الدعم والمساعدة', 'support'], ['sliders', 'الإعدادات', 'settings']].map(([i, t, g]) => row(ic(i, 20), t, '', g)).join('')}</div>
     <button class="btn ghost" style="margin:16px 0 24px;color:var(--ember)">${ic('logout', 19)} تسجيل الخروج</button></div></div>${tabbar('account')}`));
 
@@ -500,7 +506,6 @@
     document.getElementById('nxt').onclick = () => show(cur + 1);
     history.replaceState(null, '', '#' + s.id);
     clearTimeout(show.t);
-    if (s.id === 'splash') show.t = setTimeout(() => cur === byId.splash && !document.body.classList.contains('grid-mode') && show(byId.onb1), 2200);
   }
 
   idx.addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (b) show(+b.dataset.i); });
