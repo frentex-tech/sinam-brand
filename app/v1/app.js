@@ -69,10 +69,11 @@
   const star = (s = 14) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="#E0A44A" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1L3.2 9.4l6.1-.8z"/></svg>`;
   const playI = (s = 24) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
   // brand mark: hump over a ring (Bedouin wasm)
-  // brand emblem: golden ram head in a shield (img/emblem.svg, 200×190)
-  const mark = (c, s = 34) => `<img src="../img/emblem.svg" width="${s}" height="${Math.round(s * .95)}" alt="" style="display:inline-block">`;
+  // client's Sinam logo (goat + wordmark), cut from logo-source.png into gold (dark bg) and green (light bg)
+  const tone = (c) => /^#[EF]/i.test(c || '') ? 'gold' : 'green';
+  const mark = (c, s = 34) => `<img src="../img/mark-${tone(c)}.png" height="${s}" alt="" style="display:inline-block;height:${s}px;width:auto">`;
 
-  const logo = (c = '#F4EEE4', s = 30, sub = '') => `<span class="lockup" style="color:${c}">${mark('', s * 1.05)}<span><b style="font-size:${s * .95}px">سنام</b>${sub ? `<small>${sub}</small>` : ''}</span></span>`;
+  const logo = (c = '#F4EEE4', s = 30) => `<span class="lockup">${mark(c, s * 1.15)}<img src="../img/word-${tone(c)}.png" alt="سنام" style="height:${s * 1.15}px;width:auto"></span>`;
 
   /* ── chrome ── */
   const SB = (cls = '') => `<div class="sb ${cls}"><span>9:41</span><span class="ic"><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.5c2.3 0 4.4.9 6 2.4l1.3-1.4A10.5 10.5 0 0 0 8 .6 10.5 10.5 0 0 0 .7 3.5L2 4.9a8.6 8.6 0 0 1 6-2.4zm0 3.7c1.3 0 2.5.5 3.4 1.4l1.3-1.4A6.7 6.7 0 0 0 8 4.3 6.7 6.7 0 0 0 3.3 6.2l1.3 1.4c.9-.9 2.1-1.4 3.4-1.4zM8 9.8l1.9-2a2.7 2.7 0 0 0-3.8 0z"/></svg><svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="3.5" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2" fill="currentColor"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="currentColor" opacity=".5"/></svg></span></div>`;
@@ -130,11 +131,8 @@
 
   /* ── 1. البداية والحساب ── */
   const G1 = 'البداية والحساب';
-  add(G1, 'splash', 'شاشة البداية', 'أول ما يفتح التطبيق: شعار سنام كامل بالذهبي. اضغط على الشاشة للمتابعة.', () => scr(`${SB()}<div data-go="onb1" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer">
-    <div class="seal">${mark('', 210)}</div>
-    <div class="wordmark gold" style="font-size:84px;margin-top:10px">سنام</div>
-    <div class="gold" style="font-family:Cinzel,serif;font-weight:700;letter-spacing:11px;font-size:20px;direction:ltr;margin-top:2px">SINAM</div>
-    <div class="tline"><i></i><span class="gold">لحوم بلدية</span><i></i></div></div>
+  add(G1, 'splash', 'شاشة البداية', 'أول ما يفتح التطبيق: شعار سنام كامل بالذهبي على العنابي. اضغط على الشاشة للمتابعة.', () => scr(`${SB()}<div data-go="onb1" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer">
+    <img class="seal" src="../img/logo-gold.png" alt="سنام — أصالة الطعم وجودة الاختيار" style="width:300px;height:auto"></div>
     <div data-go="onb1" style="text-align:center;padding:0 0 46px;color:#B98A8A;font-size:12px;cursor:pointer">ذبح حلال · إشراف بيطري · توصيل مبرّد</div>`, 'dark splash-bg'));
 
   const onb = (n, img, k, t, d, next, label = 'التالي') => scr(`<div class="onb-img" style="${bgi(img)}">${SB('float')}<div style="position:absolute;top:58px;inset-inline-start:22px;z-index:3">${logo('#F4EEE4', 26)}</div><button style="position:absolute;top:64px;inset-inline-end:22px;color:#fff;font-size:14px;z-index:3" data-go="login">تخطَّ</button></div>
@@ -411,7 +409,7 @@
   /* ── 7. نقاط سنام ── */
   const G7 = 'نقاط سنام';
   add(G7, 'points', 'نقاطي', 'الرصيد والمستوى وطرق الكسب.', () => scr(`${SB()}${hdr('نقاط سنام', { act: `<button class="ib" data-go="pointsHistory">${ic('clock', 19)}</button>` })}<div class="body pad">
-    <div class="tier"><span class="lvl">${mark('#E9B87A', 16, 11)} المستوى الفضي</span><div class="pts">2,450 <small>نقطة</small></div><small style="opacity:.75">تعادل ٦١ ر.س خصم</small><div class="prog"><i style="width:62%"></i></div><div class="nx">باقي <b>1,550</b> نقطة على المستوى الذهبي: توصيل أولوية وتقطيع مجاني دائم</div></div>
+    <div class="tier"><span class="lvl">${mark('#E9B87A', 16)} المستوى الفضي</span><div class="pts">2,450 <small>نقطة</small></div><small style="opacity:.75">تعادل ٦١ ر.س خصم</small><div class="prog"><i style="width:62%"></i></div><div class="nx">باقي <b>1,550</b> نقطة على المستوى الذهبي: توصيل أولوية وتقطيع مجاني دائم</div></div>
     <div class="sec"><h3>استبدل نقاطك</h3><a data-go="rewards">الكل</a></div>
     <div class="hscroll">${[['خصم ٢٥ ر.س', '1,000', 'roast-paper'], ['سحب هواء مجاني', '1,500', 'lamb-raw'], ['ربع ذبيحة', '6,000', 'carcass']].map(([t, c, i]) => `<div data-go="rewards" style="width:150px;flex:none;border-radius:18px;overflow:hidden;background:var(--paper);border:1px solid var(--line)"><div style="height:90px;${bgi(i)};background-size:cover;background-position:center"></div><div style="padding:10px 12px"><b style="font-weight:600;font-size:13.5px">${t}</b><br><small style="color:var(--ember);font-weight:700">${c} نقطة</small></div></div>`).join('')}</div>
     <div class="sec"><h3>اكسب أكثر</h3></div>
